@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Patient Flow | Smart Clinic{% endblock %}
+
+{% block content %}
+<section class="section-heading">
+  <div>
+    <p class="eyebrow">Waiting room</p>
+    <h1>Move patients through the clinical visit</h1>
+  </div>
+</section>
+
+<section class="flow-grid">
+  {% for item in flow_items %}
+    <article class="flow-card">
+      <div>
+        <span class="queue">#{{ item.queue_number }}</span>
+        <h2>{{ item.patient.full_name }}</h2>
+        <p>{{ item.appointment.doctor.user.full_name if item.appointment else "Walk-in patient" }}</p>
+      </div>
+      <span class="status {{ item.current_status }}">{{ item.current_status|replace("_", " ")|title }}</span>
+      <div class="button-row">
+        {% if item.current_status == "waiting" %}
+          <form method="post" action="{{ url_for('patient_flow.update_status', flow_id=item.id) }}">
+            <input type="hidden" name="next_status" value="in_exam">
+            <button type="submit">Start Exam</button>
+          </form>
+        {% endif %}
+        {% if item.current_status == "in_exam" %}
+          <form method="post" action="{{ url_for('patient_flow.update_status', flow_id=item.id) }}">
+            <input type="hidden" name="next_status" value="completed">
+            <button type="submit">Complete</button>
+          </form>
+        {% endif %}
+        <button type="button" data-not-implemented>Clinical Notes</button>
+      </div>
+    </article>
+  {% else %}
+    <section class="empty-state">
+      <h2>No checked-in patients</h2>
+      <p>Use the appointment list to check in a scheduled patient.</p>
+    </section>
+  {% endfor %}
+</section>
+{% endblock %}

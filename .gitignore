@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.env
+*.pyc
+.DS_Store
+FSE_26_Assignment Outline.docx.pdf
+erik-mclean-4JaWGHzlwvk-unsplash.jpg
+graham-ruttan-ScXGSS5a9BI-unsplash.jpg

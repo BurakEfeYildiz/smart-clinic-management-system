@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Appointments | Smart Clinic{% endblock %}
+
+{% block content %}
+<section class="section-heading">
+  <div>
+    <p class="eyebrow">Appointments</p>
+    <h1>Scheduled clinic visits</h1>
+  </div>
+  {% if user.role in ["secretary", "patient"] %}
+    <a class="button" href="{{ url_for('appointments.new') }}">New Appointment</a>
+  {% endif %}
+</section>
+
+<section class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Patient</th>
+        <th>Doctor</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Reason</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for appointment in appointments %}
+        <tr>
+          <td>{{ appointment.patient.full_name }}</td>
+          <td>{{ appointment.doctor.user.full_name }}</td>
+          <td>{{ appointment.appointment_date }}</td>
+          <td>{{ appointment.appointment_time.strftime("%H:%M") }}</td>
+          <td>{{ appointment.reason }}</td>
+          <td><span class="status {{ appointment.status }}">{{ appointment.status|replace("_", " ")|title }}</span></td>
+          <td>
+            {% if user.role == "secretary" and appointment.status == "scheduled" %}
+              <form method="post" action="{{ url_for('appointments.check_in', appointment_id=appointment.id) }}">
+                <button type="submit">Check In</button>
+              </form>
+            {% else %}
+              <button type="button" data-not-implemented>Details</button>
+            {% endif %}
+          </td>
+        </tr>
+      {% else %}
+        <tr>
+          <td colspan="7">No appointments found.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

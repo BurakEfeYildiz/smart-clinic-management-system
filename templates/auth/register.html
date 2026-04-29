@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create Account | Smart Clinic</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  </head>
+  <body class="login-body register-body">
+    <main class="login-shell">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <section class="flash-stack login-flash-stack">
+            {% for category, message in messages %}
+              <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+          </section>
+        {% endif %}
+      {% endwith %}
+
+      <section class="login-stage register-stage">
+        <div class="login-copy">
+          <a class="landing-brand" href="{{ url_for('auth.home') }}">
+            <span class="hospital-mark" aria-hidden="true">
+              <svg viewBox="0 0 48 48" role="img" aria-hidden="true">
+                <rect x="3" y="41" width="42" height="4" rx="1.2" class="outline"></rect>
+                <rect x="7" y="14" width="9" height="27" rx="1.8" class="building"></rect>
+                <rect x="16" y="10" width="16" height="31" rx="2.2" class="building"></rect>
+                <rect x="32" y="14" width="9" height="27" rx="1.8" class="building"></rect>
+                <rect x="18" y="3" width="12" height="12" rx="1.8" class="building"></rect>
+                <rect x="21.5" y="5.5" width="5" height="7" rx="0.8" class="cross-vertical"></rect>
+                <rect x="20.5" y="6.5" width="7" height="5" rx="0.8" class="cross-horizontal"></rect>
+                <rect x="9" y="19" width="4" height="5" rx="0.8" class="window"></rect>
+                <rect x="9" y="27" width="4" height="5" rx="0.8" class="window"></rect>
+                <rect x="9" y="35" width="4" height="5" rx="0.8" class="window"></rect>
+                <rect x="19" y="19" width="4" height="5" rx="0.8" class="window"></rect>
+                <rect x="24.5" y="19" width="4" height="5" rx="0.8" class="window"></rect>
+                <rect x="19" y="27" width="4" height="5" rx="0.8" class="window"></rect>
+                <rect x="24.5" y="27" width="4" height="5" rx="0.8" class="window"></rect>
+                <rect x="19.5" y="34" width="8" height="7" rx="0.9" class="door"></rect>
+                <rect x="35" y="19" width="4" height="5" rx="0.8" class="window"></rect>
+                <rect x="35" y="27" width="4" height="5" rx="0.8" class="window"></rect>
+                <rect x="35" y="35" width="4" height="5" rx="0.8" class="window"></rect>
+              </svg>
+            </span>
+            <span>
+              <strong>Smart Clinic</strong>
+              <small>Hospital & Digital Care</small>
+            </span>
+          </a>
+
+          <div class="auth-copy-content register-copy-content">
+            <p class="eyebrow auth-eyebrow register-eyebrow">Register</p>
+            <h1>Create your Smart Clinic account.</h1>
+            <p>
+              Choose one role and complete only the details required for that account type.
+            </p>
+          </div>
+        </div>
+
+        <form class="panel login-panel register-panel" method="post" id="registerForm">
+          <h2>Create Account</h2>
+
+          <label for="role">What would you like to register as?</label>
+          <select id="role" name="role" required data-role-select>
+            <option value="">Choose a role</option>
+            <option value="patient">Patient</option>
+            <option value="doctor">Doctor</option>
+            <option value="secretary">Secretary</option>
+          </select>
+
+          <label for="full_name">Full name</label>
+          <input id="full_name" name="full_name" required>
+
+          <label for="username">Username</label>
+          <input id="username" name="username" autocomplete="username" required>
+
+          <label for="email">Email address</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" autocomplete="new-password" required>
+
+          <label for="confirm_password">Confirm password</label>
+          <input id="confirm_password" name="confirm_password" type="password" autocomplete="new-password" required>
+
+          <label for="phone">Phone number</label>
+          <input id="phone" name="phone">
+
+          <div class="role-fields" data-role-panel="patient" hidden>
+            <h3>Patient details</h3>
+            <label for="national_id">National ID</label>
+            <input id="national_id" name="national_id" data-role-required="patient">
+
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender">
+              <option value="">Choose gender</option>
+              <option value="Female">Female</option>
+              <option value="Male">Male</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="role-fields" data-role-panel="doctor" hidden>
+            <h3>Doctor details</h3>
+            <label for="department_id">Department</label>
+            <select id="department_id" name="department_id" data-role-required="doctor">
+              <option value="">Choose department</option>
+              {% for department in departments %}
+                <option value="{{ department.id }}">{{ department.name }}</option>
+              {% endfor %}
+            </select>
+
+            <label for="title">Professional title</label>
+            <input id="title" name="title" placeholder="Cardiologist" data-role-required="doctor">
+
+            <label for="room_number">Room number</label>
+            <input id="room_number" name="room_number" data-role-required="doctor">
+
+            <label for="employee_code_doctor">Employee code</label>
+            <input id="employee_code_doctor" name="employee_code_doctor" data-role-required="doctor">
+          </div>
+
+          <div class="role-fields" data-role-panel="secretary" hidden>
+            <h3>Secretary details</h3>
+            <label for="employee_code_secretary">Employee code</label>
+            <input id="employee_code_secretary" name="employee_code_secretary" data-role-required="secretary">
+          </div>
+
+          <button type="submit">Create Account</button>
+          <a class="text-link" href="{{ url_for('auth.login') }}">Already have an account?</a>
+          <a class="text-link" href="{{ url_for('auth.home') }}">Back to home page</a>
+        </form>
+      </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Patient Panel | Smart Clinic{% endblock %}
+
+{% block content %}
+<section class="hero-band">
+  <p class="eyebrow">Patient panel</p>
+  <h1>Book appointments from doctor availability and follow your visit.</h1>
+</section>
+
+<section class="action-grid">
+  <a class="action-card" href="{{ url_for('appointments.new') }}">
+    <span>Book Appointment</span>
+    <strong>Choose a doctor and see available appointment times.</strong>
+  </a>
+  <a class="action-card" href="{{ url_for('appointments.index') }}">
+    <span>My Appointments</span>
+    <strong>Review scheduled clinical visits.</strong>
+  </a>
+  <button class="action-card" data-not-implemented>
+    <span>Medical History</span>
+    <strong>Past visit records will be added later.</strong>
+  </button>
+  <button class="action-card" data-not-implemented>
+    <span>Lab Results</span>
+    <strong>Laboratory result tracking is a future module.</strong>
+  </button>
+</section>
+{% endblock %}

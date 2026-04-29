@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Availability | Smart Clinic{% endblock %}
+
+{% block content %}
+<section class="section-heading">
+  <div>
+    <p class="eyebrow">Doctor availability</p>
+    <h1>Open time ranges for appointment booking</h1>
+  </div>
+</section>
+
+<section class="two-column">
+  <form class="panel" method="post">
+    <h2>Add availability</h2>
+    <label for="available_date">Date</label>
+    <input id="available_date" type="date" name="available_date" required>
+
+    <label for="start_time">Start time</label>
+    <input id="start_time" type="time" name="start_time" required>
+
+    <label for="end_time">End time</label>
+    <input id="end_time" type="time" name="end_time" required>
+
+    <label for="slot_minutes">Slot duration</label>
+    <select id="slot_minutes" name="slot_minutes">
+      <option value="15">15 minutes</option>
+      <option value="30" selected>30 minutes</option>
+      <option value="45">45 minutes</option>
+      <option value="60">60 minutes</option>
+    </select>
+
+    <label for="status">Status</label>
+    <select id="status" name="status">
+      <option value="available">Available</option>
+      <option value="blocked">Blocked</option>
+    </select>
+
+    <label for="note">Note</label>
+    <input id="note" name="note" placeholder="Optional">
+
+    <button type="submit">Save Availability</button>
+  </form>
+
+  <section class="panel">
+    <h2>Current availability</h2>
+    <div class="stack">
+      {% for item in availability_items %}
+        <article class="list-item">
+          <strong>{{ item.available_date }}</strong>
+          <span>{{ item.start_time.strftime("%H:%M") }} - {{ item.end_time.strftime("%H:%M") }}</span>
+          <span class="status {{ item.status }}">{{ item.status|title }}</span>
+        </article>
+      {% else %}
+        <p>No availability has been added yet.</p>
+      {% endfor %}
+    </div>
+  </section>
+</section>
+{% endblock %}

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Smart Clinic Hospital</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  </head>
+  <body class="landing-body">
+    <main class="landing-shell" style="background-image: linear-gradient(90deg, rgba(10, 23, 20, 0.82) 0%, rgba(10, 23, 20, 0.66) 44%, rgba(10, 23, 20, 0.40) 100%), url('{{ url_for('static', filename='images/hospital-landing-hero.jpg') }}');">
+      <header class="landing-topbar">
+        <a class="landing-brand" href="{{ url_for('auth.home') }}">
+          <span class="hospital-mark" aria-hidden="true">
+            <svg viewBox="0 0 48 48" role="img" aria-hidden="true">
+              <rect x="3" y="41" width="42" height="4" rx="1.2" class="outline"></rect>
+              <rect x="7" y="14" width="9" height="27" rx="1.8" class="building"></rect>
+              <rect x="16" y="10" width="16" height="31" rx="2.2" class="building"></rect>
+              <rect x="32" y="14" width="9" height="27" rx="1.8" class="building"></rect>
+              <rect x="18" y="3" width="12" height="12" rx="1.8" class="building"></rect>
+              <rect x="21.5" y="5.5" width="5" height="7" rx="0.8" class="cross-vertical"></rect>
+              <rect x="20.5" y="6.5" width="7" height="5" rx="0.8" class="cross-horizontal"></rect>
+              <rect x="9" y="19" width="4" height="5" rx="0.8" class="window"></rect>
+              <rect x="9" y="27" width="4" height="5" rx="0.8" class="window"></rect>
+              <rect x="9" y="35" width="4" height="5" rx="0.8" class="window"></rect>
+              <rect x="19" y="19" width="4" height="5" rx="0.8" class="window"></rect>
+              <rect x="24.5" y="19" width="4" height="5" rx="0.8" class="window"></rect>
+              <rect x="19" y="27" width="4" height="5" rx="0.8" class="window"></rect>
+              <rect x="24.5" y="27" width="4" height="5" rx="0.8" class="window"></rect>
+              <rect x="19.5" y="34" width="8" height="7" rx="0.9" class="door"></rect>
+              <rect x="35" y="19" width="4" height="5" rx="0.8" class="window"></rect>
+              <rect x="35" y="27" width="4" height="5" rx="0.8" class="window"></rect>
+              <rect x="35" y="35" width="4" height="5" rx="0.8" class="window"></rect>
+            </svg>
+          </span>
+          <span>
+            <strong>Smart Clinic</strong>
+            <small>Hospital & Digital Care</small>
+          </span>
+        </a>
+
+        <nav class="landing-actions">
+          <a class="ghost-link" href="{{ url_for('auth.login') }}">Sign In</a>
+          <a class="button secondary-button" href="{{ url_for('auth.register') }}">Register</a>
+        </nav>
+      </header>
+
+      <section class="landing-hero">
+        <div class="landing-copy">
+          <p class="eyebrow light-eyebrow">Hospital entrance</p>
+          <h1>Care begins with a calm, clear digital front door.</h1>
+          <p class="landing-text">
+            Smart Clinic brings appointment access, patient guidance, and doctor availability
+            together in one modern hospital experience.
+          </p>
+
+          <div class="landing-cta-row">
+            <button class="button" type="button" data-not-implemented>Open Patient Portal</button>
+            <button class="button secondary-button" type="button" data-not-implemented>Book Appointment</button>
+          </div>
+        </div>
+
+        <aside class="glass-panel">
+          <div class="glass-stat">
+            <span>Departments</span>
+            <strong>24</strong>
+          </div>
+          <div class="glass-stat">
+            <span>Physicians</span>
+            <strong>120+</strong>
+          </div>
+          <div class="glass-stat">
+            <span>Patient access</span>
+            <strong>7/24</strong>
+          </div>
+          <div class="glass-note">
+            Appointment, prescriptions, and results are organized from one secure hospital portal.
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <div class="toast" id="notImplementedToast">This function has not been implemented yet</div>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Smart Clinic{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="{{ url_for('dashboard.index') }}">Smart Clinic</a>
+      <nav class="nav">
+        <a href="{{ url_for('dashboard.index') }}">Dashboard</a>
+        <a href="{{ url_for('appointments.index') }}">Appointments</a>
+        <a href="{{ url_for('patient_flow.index') }}">Patient Flow</a>
+        <a href="{{ url_for('availability.index') }}">Availability</a>
+        <button class="link-button" data-not-implemented>Billing</button>
+        <button class="link-button" data-not-implemented>Reports</button>
+      </nav>
+      <div class="session">
+        {% if session.get("user_id") %}
+          <a href="{{ url_for('auth.logout') }}">Logout</a>
+        {% endif %}
+      </div>
+    </header>
+
+    <main class="page">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <section class="flash-stack">
+            {% for category, message in messages %}
+              <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+          </section>
+        {% endif %}
+      {% endwith %}
+      {% block content %}{% endblock %}
+    </main>
+
+    <div class="toast" id="notImplementedToast">This function has not been implemented yet</div>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>

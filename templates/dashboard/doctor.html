@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Doctor Panel | Smart Clinic{% endblock %}
+
+{% block content %}
+<section class="hero-band">
+  <p class="eyebrow">Doctor panel</p>
+  <h1>Review your schedule and guide patients through examination.</h1>
+</section>
+
+<section class="action-grid">
+  <a class="action-card" href="{{ url_for('appointments.index') }}">
+    <span>My Appointments</span>
+    <strong>See the appointment list assigned to your profile.</strong>
+  </a>
+  <a class="action-card" href="{{ url_for('availability.index') }}">
+    <span>Availability</span>
+    <strong>Open time ranges patients and secretaries can book.</strong>
+  </a>
+  <a class="action-card" href="{{ url_for('patient_flow.index') }}">
+    <span>Patient Flow</span>
+    <strong>Start and complete patient examinations.</strong>
+  </a>
+  <button class="action-card" data-not-implemented>
+    <span>Prescription</span>
+    <strong>Prescription writing is ready as a future module.</strong>
+  </button>
+</section>
+{% endblock %}

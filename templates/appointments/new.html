@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}New Appointment | Smart Clinic{% endblock %}
+
+{% block content %}
+<section class="section-heading">
+  <div>
+    <p class="eyebrow">Appointment booking</p>
+    <h1>Create a new appointment</h1>
+  </div>
+</section>
+
+<section class="two-column">
+  <form class="panel" method="get">
+    <h2>Find available slots</h2>
+    <label for="doctor_id_lookup">Doctor</label>
+    <select id="doctor_id_lookup" name="doctor_id" required>
+      <option value="">Choose doctor</option>
+      {% for doctor in doctors %}
+        <option value="{{ doctor.id }}" {% if selected_doctor_id == doctor.id %}selected{% endif %}>
+          {{ doctor.user.full_name }} - {{ doctor.department.name }}
+        </option>
+      {% endfor %}
+    </select>
+
+    <label for="appointment_date_lookup">Date</label>
+    <input id="appointment_date_lookup" type="date" name="appointment_date" value="{{ selected_date }}" required>
+    <button type="submit">Show Slots</button>
+  </form>
+
+  <form class="panel" method="post">
+    <h2>Patient and visit details</h2>
+    <input type="hidden" name="doctor_id" value="{{ selected_doctor_id or '' }}">
+    <input type="hidden" name="appointment_date" value="{{ selected_date }}">
+
+    <label for="patient_name">Patient name</label>
+    <input id="patient_name" name="patient_name" placeholder="Full name" required>
+
+    <label for="national_id">National ID</label>
+    <input id="national_id" name="national_id" placeholder="Patient identification number" required>
+
+    <label for="phone">Phone</label>
+    <input id="phone" name="phone" placeholder="+90 ...">
+
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" placeholder="patient@example.com">
+
+    <label for="gender">Gender</label>
+    <select id="gender" name="gender">
+      <option value="">Prefer not to say</option>
+      <option>Female</option>
+      <option>Male</option>
+      <option>Other</option>
+    </select>
+
+    <label for="appointment_time">Available time</label>
+    <select id="appointment_time" name="appointment_time" required>
+      <option value="">Choose available time</option>
+      {% for slot in slots %}
+        <option value="{{ slot.time.strftime('%H:%M') }}" {% if not slot.is_available %}disabled{% endif %}>
+          {{ slot.time.strftime("%H:%M") }} - {{ "Available" if slot.is_available else "Booked" }}
+        </option>
+      {% endfor %}
+    </select>
+
+    <label for="reason">Reason</label>
+    <textarea id="reason" name="reason" rows="4" placeholder="Describe the visit reason" required></textarea>
+
+    <button type="submit">Create Appointment</button>
+  </form>
+</section>
+
+<section class="slot-board">
+  <h2>Doctor availability</h2>
+  <div class="slot-grid">
+    {% for slot in slots %}
+      <span class="slot {{ 'available' if slot.is_available else 'booked' }}">
+        {{ slot.time.strftime("%H:%M") }}
+      </span>
+    {% else %}
+      <p>Choose a doctor and date to see available times.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
